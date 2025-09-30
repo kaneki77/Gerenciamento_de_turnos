@@ -164,5 +164,5 @@ Para dúvidas ou problemas:
 
 ## Licença
 
-Este projeto foi desenvolvido para uso interno da Usina Coruripe.
+Este projeto foi desenvolvido para aprendizagem e conhecimento, podendo ser usado para fins educacionai
 
