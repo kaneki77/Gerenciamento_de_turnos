@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Hamburgueria.Domain;
+using System;
 
 namespace Hamburgueria.Data
 {
@@ -14,7 +15,25 @@ namespace Hamburgueria.Data
             _dbConnection = new DbConnection();
         }
 
-        // Método que implementa o SELECT real para atender ao Critério de Aceitação D15
+        // Implementação do CRUD: CREATE
+        public void Adicionar(Cliente cliente)
+        {
+            const string query = "INSERT INTO Cliente (nome, telefone, email) VALUES (@nome, @telefone, @email)";
+
+            using (var connection = _dbConnection.GetConnection())
+            {
+                connection.Open();
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@nome", cliente.Nome);
+                    command.Parameters.AddWithValue("@telefone", cliente.Telefone);
+                    command.Parameters.AddWithValue("@email", cliente.Email ?? (object)DBNull.Value); // Trata NULL
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Implementação do CRUD: READ (GetAll)
         public List<Cliente> GetAll()
         {
             var clientes = new List<Cliente>();
@@ -43,6 +62,41 @@ namespace Hamburgueria.Data
                 }
             }
             return clientes;
+        }
+
+        // Implementação do CRUD: UPDATE
+        public void Atualizar(Cliente cliente)
+        {
+            const string query = "UPDATE Cliente SET nome = @nome, telefone = @telefone, email = @email WHERE id_cliente = @id";
+
+            using (var connection = _dbConnection.GetConnection())
+            {
+                connection.Open();
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@nome", cliente.Nome);
+                    command.Parameters.AddWithValue("@telefone", cliente.Telefone);
+                    command.Parameters.AddWithValue("@email", cliente.Email ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@id", cliente.Id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Implementação do CRUD: DELETE
+        public void Remover(int id)
+        {
+            const string query = "DELETE FROM Cliente WHERE id_cliente = @id";
+
+            using (var connection = _dbConnection.GetConnection())
+            {
+                connection.Open();
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
