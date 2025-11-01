@@ -16,7 +16,10 @@ namespace Hamburgueria.UI
             {
                 // Configuração da Injeção de Dependência (Simples)
                 IClienteRepository clienteRepository = new ClienteRepository();
+                ICategoriaRepository categoriaRepository = new CategoriaRepository();
+
                 clienteService = new ClienteService(clienteRepository);
+                categoriaService = new CategoriaService(categoriaRepository);
             }
             catch (Exception ex)
             {
@@ -31,11 +34,12 @@ namespace Hamburgueria.UI
                 // Cria uma instância mock ou lança uma exceção fatal
                 // Para fins de compilação, vamos apenas criar uma instância básica
                 clienteService = new ClienteService(new ClienteRepository());
+                categoriaService = new CategoriaService(new CategoriaRepository());
             }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(clienteService));
+            Application.Run(new Form1(clienteService, categoriaService));
         }
     }
 }

@@ -31,7 +31,25 @@ namespace Hamburgueria.UI
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.Text = "Menu Principal";
+            this.btnCategoria = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnCategoria
+            // 
+            this.btnCategoria.Location = new System.Drawing.Point(12, 12);
+            this.btnCategoria.Name = "btnCategoria";
+            this.btnCategoria.Size = new System.Drawing.Size(150, 30);
+            this.btnCategoria.TabIndex = 0;
+            this.btnCategoria.Text = "Gerenciar Categorias";
+            this.btnCategoria.UseVisualStyleBackColor = true;
+            this.btnCategoria.Click += new System.EventHandler(this.btnCategoria_Click);
+            // 
+            // Form1
+            // 
+            this.Controls.Add(this.btnCategoria);
+            this.Name = "Form1";
+            this.ResumeLayout(false);
         }
 
         #endregion
