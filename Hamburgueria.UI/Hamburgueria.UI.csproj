@@ -14,5 +14,10 @@
     <ProjectReference Include="..\Hamburgueria.Data\Hamburgueria.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Hamburgueria.Domain\Hamburgueria.Domain.csproj" />
+    <ProjectReference Include="..\Hamburgueria.Data\Hamburgueria.Data.csproj" />
+  </ItemGroup>
+
 </Project>
 

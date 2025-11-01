@@ -15,11 +15,13 @@ namespace Hamburgueria.UI
         [STAThread]
         static void Main()
         {
+            ClienteService clienteService = null;
+        {
             try
             {
                 // Teste de conexão e SELECT real (Critério de Aceitação D15)
                 IClienteRepository clienteRepository = new ClienteRepository();
-                ClienteService clienteService = new ClienteService(clienteRepository);
+                clienteService = new ClienteService(clienteRepository);
                 
 
                 
