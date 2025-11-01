@@ -1,17 +1,17 @@
 
 using System.Collections.Generic;
-using Hamburgueria.Data;
+
 using System;
 
 namespace Hamburgueria.Domain
 {
     public class ClienteService
     {
-        private readonly ClienteRepository _clienteRepository;
+        private readonly IClienteRepository _clienteRepository;
 
-        public ClienteService()
+        public ClienteService(IClienteRepository clienteRepository)
         {
-            _clienteRepository = new ClienteRepository();
+            _clienteRepository = clienteRepository;
         }
 
         // Regra de Negócio: Validação de campos obrigatórios (Nome e Telefone)
