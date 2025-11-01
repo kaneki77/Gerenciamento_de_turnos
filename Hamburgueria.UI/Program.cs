@@ -11,6 +11,7 @@ namespace Hamburgueria.UI
         static void Main()
         {
             ClienteService clienteService = null;
+            CategoriaService categoriaService = null;
 
             try
             {
@@ -34,6 +35,14 @@ namespace Hamburgueria.UI
                 // Cria uma instância mock ou lança uma exceção fatal
                 // Para fins de compilação, vamos apenas criar uma instância básica
                 clienteService = new ClienteService(new ClienteRepository());
+            }
+            
+            // Se a inicialização falhou, categoriaService será null, o que causará um erro
+            // na linha Application.Run. Para evitar isso, vamos garantir que ele não seja null.
+            if (categoriaService == null)
+            {
+                // Cria uma instância mock ou lança uma exceção fatal
+                // Para fins de compilação, vamos apenas criar uma instância básica
                 categoriaService = new CategoriaService(new CategoriaRepository());
             }
 

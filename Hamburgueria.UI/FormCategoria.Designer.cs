@@ -90,7 +90,7 @@ namespace Hamburgueria.UI
             this.btnLimpar.TabIndex = 5;
             this.btnLimpar.Text = "Limpar";
             this.btnLimpar.UseVisualStyleBackColor = true;
-            this.btnLimpar.Click += new System.EventHandler(this.LimparCampos);
+            this.btnLimpar.Click += new System.EventHandler(this.btnLimpar_Click);
             // 
             // dgvCategorias
             // 

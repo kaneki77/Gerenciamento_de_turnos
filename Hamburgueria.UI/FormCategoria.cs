@@ -43,6 +43,11 @@ namespace Hamburgueria.UI
             MessageBox.Show("Campos limpos. (Ainda sem controles visuais)");
         }
 
+        private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            LimparCampos();
+        }
+
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             try
