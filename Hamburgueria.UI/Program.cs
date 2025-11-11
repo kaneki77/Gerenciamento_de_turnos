@@ -1,10 +1,7 @@
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Hamburgueria.Domain;
-using Hamburgueria.Data; // Necessário para acessar a camada de dados
+using Hamburgueria.Data;
 
 namespace Hamburgueria.UI
 {
@@ -13,42 +10,45 @@ namespace Hamburgueria.UI
         [STAThread]
         static void Main()
         {
+            ClienteService clienteService = null;
+            CategoriaService categoriaService = null;
+
             try
             {
-                // Teste de conexão e SELECT real (Critério de Aceitação D15)
-                var saidaService = new SaidaProdutoService();
-                List<SaidaProduto> saidas = saidaService.BuscarTodasSaidas();
+                // Configuração da Injeção de Dependência (Simples)
+                IClienteRepository clienteRepository = new ClienteRepository();
+                ICategoriaRepository categoriaRepository = new CategoriaRepository();
 
-                Console.WriteLine("==================================================");
-                Console.WriteLine("Teste de Conexão C# <-> MySQL (SELECT Real - Saídas)");
-                Console.WriteLine("==================================================");
-
-                if (saidas.Any())
-                {
-                    Console.WriteLine($"SUCESSO! {saidas.Count} registro(s) de saída encontrado(s) no banco de dados:");
-                    foreach (var saida in saidas)
-                    {
-                        Console.WriteLine($"- ID: {saida.Id}, Produto ID: {saida.IdProduto}, Qtd: {saida.QuantidadeSaida}, Data: {saida.DataHora}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("SUCESSO! Conexão estabelecida, mas nenhum registro de saída encontrado.");
-                }
-                Console.WriteLine("==================================================");
+                clienteService = new ClienteService(clienteRepository);
+                categoriaService = new CategoriaService(categoriaRepository);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("==================================================");
-                Console.WriteLine("FALHA NO TESTE DE CONEXÃO/SELECT!");
-                Console.WriteLine($"Erro: {ex.Message}");
-                Console.WriteLine("\nVerifique se o MySQL está rodando e se a ConnectionString em Hamburgueria.Data/DbConnection.cs está correta.");
-                Console.WriteLine("==================================================");
+                // Em caso de erro na inicialização (ex: conexão com DB), apenas loga e continua
+                Console.WriteLine($"Erro na inicialização: {ex.Message}");
             }
 
-            // Application.EnableVisualStyles();
-            // Application.SetCompatibleTextRenderingDefault(false);
-            // Application.Run(new Form1());
+            // Se a inicialização falhou, clienteService será null, o que causará um erro
+            // na linha Application.Run. Para evitar isso, vamos garantir que ele não seja null.
+            if (clienteService == null)
+            {
+                // Cria uma instância mock ou lança uma exceção fatal
+                // Para fins de compilação, vamos apenas criar uma instância básica
+                clienteService = new ClienteService(new ClienteRepository());
+            }
+            
+            // Se a inicialização falhou, categoriaService será null, o que causará um erro
+            // na linha Application.Run. Para evitar isso, vamos garantir que ele não seja null.
+            if (categoriaService == null)
+            {
+                // Cria uma instância mock ou lança uma exceção fatal
+                // Para fins de compilação, vamos apenas criar uma instância básica
+                categoriaService = new CategoriaService(new CategoriaRepository());
+            }
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1(clienteService, categoriaService));
         }
     }
 }
