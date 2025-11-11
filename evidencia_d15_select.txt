@@ -1,0 +1,9 @@
+
+==================================================
+Teste de Conexão C# <-> MySQL (SELECT Real)
+==================================================
+SUCESSO! 2 cliente(s) encontrado(s) no banco de dados:
+- ID: 1, Nome: João Silva, Telefone: 11987654321
+- ID: 2, Nome: Maria Souza, Telefone: 11998765432
+==================================================
+

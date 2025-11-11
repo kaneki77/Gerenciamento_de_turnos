@@ -1,0 +1,96 @@
+
+# Diagrama Entidade-Relacionamento (DER) - Hamburgueria
+
+Cliente: {shape: class} {
+  id_cliente: int {key: primary}
+  nome: varchar
+  telefone: varchar
+  email: varchar
+  data_cadastro: datetime
+}
+
+Produto: {shape: class} {
+  id_produto: int {key: primary}
+  nome: varchar
+  descricao: varchar
+  preco_venda: decimal
+  ativo: boolean
+}
+
+Ingrediente: {shape: class} {
+  id_ingrediente: int {key: primary}
+  nome: varchar
+  unidade_medida: varchar
+  estoque_minimo: decimal
+}
+
+ProdutoIngrediente: {shape: class} {
+  id_produto: int {key: primary, key: foreign}
+  id_ingrediente: int {key: primary, key: foreign}
+  quantidade_necessaria: decimal
+}
+
+Pedido: {shape: class} {
+  id_pedido: int {key: primary}
+  id_cliente: int {key: foreign}
+  data_hora_pedido: datetime
+  status: enum
+  total_pedido: decimal
+}
+
+ItemPedido: {shape: class} {
+  id_item_pedido: int {key: primary}
+  id_pedido: int {key: foreign}
+  id_produto: int {key: foreign}
+  quantidade: int
+  preco_unitario: decimal
+  subtotal: decimal
+}
+
+Estoque: {shape: class} {
+  id_estoque: int {key: primary}
+  id_ingrediente: int {key: foreign}
+  quantidade_atual: decimal
+  data_ultima_atualizacao: datetime
+}
+
+Usuario: {shape: class} {
+  id_usuario: int {key: primary}
+  nome: varchar
+  login: varchar
+  senha_hash: varchar
+  nivel_acesso: enum
+}
+
+Caixa: {shape: class} {
+  id_caixa: int {key: primary}
+  id_usuario: int {key: foreign}
+  data_abertura: datetime
+  data_fechamento: datetime
+  saldo_inicial: decimal
+  saldo_final: decimal
+}
+
+Transacao: {shape: class} {
+  id_transacao: int {key: primary}
+  id_caixa: int {key: foreign}
+  tipo: enum
+  descricao: varchar
+  valor: decimal
+  data_hora: datetime
+}
+
+# Relacionamentos
+
+Cliente -- Pedido: "1:N"
+Pedido -- ItemPedido: "1:N"
+Produto -- ItemPedido: "1:N"
+
+Produto -- ProdutoIngrediente: "1:N"
+Ingrediente -- ProdutoIngrediente: "1:N"
+
+Ingrediente -- Estoque: "1:1"
+
+Usuario -- Caixa: "1:N"
+Caixa -- Transacao: "1:N"
+
